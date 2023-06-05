@@ -8,8 +8,12 @@ app.use(cors());
 
 const port = process.env.PORT || 3000;
 
+// Aquí invocamos las rutas
+//TODO localhost/api/____________
+app.use("/api", require("./routes"));
+
 app.listen(port, () => {
-  console.log("App running on por:" + port);
+  console.log("App running on port:" + port);
 });
 
 dbConnect();
