@@ -23,7 +23,13 @@ const getItem = (req, res) => {};
  * @param {*} req
  * @param {*} res
  */
-const createItems = (req, res) => {};
+
+const createItems = async (req, res) => {
+  const { body } = req;
+  console.log(body);
+  const data = await jobPositionsModel.create(body);
+  res.send({ data });
+};
 
 /**
  * Editar item
