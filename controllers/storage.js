@@ -8,7 +8,6 @@ const PUBLIC_URL = process.env.PUBLIC_URL;
  */
 const getItems = async (req, res) => {
   const data = await storageModel.find({});
-
   res.send({ data });
 };
 
@@ -48,6 +47,6 @@ const updateItems = (req, res) => {};
  * @param {*} req
  * @param {*} res
  */
-const deleteItems = (req, res) => {};
+const deleteItem = (req, res) => {};
 
-module.exports = { getItems, getItem, createItem, updateItems, deleteItems };
+module.exports = { getItems, getItem, createItem, updateItems, deleteItem };

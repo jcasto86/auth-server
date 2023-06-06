@@ -1,19 +1,43 @@
 const express = require("express");
 const router = express.Router();
-const { validatorCreateItem } = require("../validators/job-positions");
+const {
+  validatorCreateItem,
+  validatorGetItem,
+} = require("../validators/job-positions");
 const customHeader = require("../middleware/customHeader");
 const {
   getItems,
   createItem,
   getItem,
+  updateItems,
+  deleteItem,
 } = require("../controllers/job-positions");
 
 // TODO http://localhost/tracks GET, POST, DELETE, PUT
 
+/**
+ * Get Items.
+ */
 router.get("/", getItems);
 
-router.post("/", validatorCreateItem, customHeader, createItem);
+/**
+ * Get Item detail.
+ */
+router.get("/:id", validatorGetItem, getItem);
 
-router.get("/:id", getItem);
+/**
+ * Create Items.
+ */
+router.post("/", validatorCreateItem, createItem);
+
+/**
+ * Update Item.
+ */
+router.put("/:id", validatorGetItem, validatorCreateItem, updateItems);
+
+/**
+ * Delete Item.
+ */
+router.delete("/:id", validatorGetItem, deleteItem);
 
 module.exports = router;

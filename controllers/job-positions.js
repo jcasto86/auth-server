@@ -1,4 +1,6 @@
+const { matchedData } = require("express-validator");
 const { jobPositionsModel } = require("../models");
+const { handleHttpError } = require("../utils/handleError");
 
 /**
  * Obtener lista de la BD!
@@ -6,9 +8,12 @@ const { jobPositionsModel } = require("../models");
  * @param {*} res
  */
 const getItems = async (req, res) => {
-  const data = await jobPositionsModel.find({});
-
-  res.send({ data });
+  try {
+    const data = await jobPositionsModel.find({});
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "GET_ITEMS_ERROR");
+  }
 };
 
 /**
@@ -16,7 +21,16 @@ const getItems = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-const getItem = (req, res) => {};
+const getItem = async (req, res) => {
+  try {
+    req = matchedData(req);
+    const id = req.id;
+    const data = await jobPositionsModel.findById(id);
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "GET_ITEM_ERROR");
+  }
+};
 
 /**
  * Insertar un registro
@@ -25,10 +39,13 @@ const getItem = (req, res) => {};
  */
 
 const createItem = async (req, res) => {
-  const { body } = req;
-  console.log(body);
-  const data = await jobPositionsModel.create(body);
-  res.send({ data });
+  try {
+    const body = matchedData(req);
+    const data = await jobPositionsModel.create(body);
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "CREATE_ITEMS_ERROR");
+  }
 };
 
 /**
@@ -36,13 +53,31 @@ const createItem = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-const updateItems = (req, res) => {};
+const updateItems = async (req, res) => {
+  try {
+    const { id, ...body } = matchedData(req);
+    const data = await jobPositionsModel.findByIdAndUpdate(id, body);
+
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "UPDATE_ITEMS_ERROR", error.body);
+  }
+};
 
 /**
  * Eliminar item
  * @param {*} req
  * @param {*} res
  */
-const deleteItems = (req, res) => {};
+const deleteItem = async (req, res) => {
+  try {
+    req = matchedData(req);
+    const id = req.id;
+    const data = await jobPositionsModel.deleteOne({ _id: id });
+    res.send({ data });
+  } catch (error) {
+    handleHttpError(res, "DELETE_ITEM_ERROR");
+  }
+};
 
-module.exports = { getItems, getItem, createItem, updateItems, deleteItems };
+module.exports = { getItems, getItem, createItem, updateItems, deleteItem };
