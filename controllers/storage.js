@@ -25,7 +25,7 @@ const getItem = (req, res) => {};
  * @param {*} res
  */
 
-const createItems = async (req, res) => {
+const createItem = async (req, res) => {
   const { body, file } = req;
   console.log(file);
   const fileData = {
@@ -50,4 +50,4 @@ const updateItems = (req, res) => {};
  */
 const deleteItems = (req, res) => {};
 
-module.exports = { getItems, getItem, createItems, updateItems, deleteItems };
+module.exports = { getItems, getItem, createItem, updateItems, deleteItems };

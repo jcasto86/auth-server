@@ -24,7 +24,7 @@ const getItem = (req, res) => {};
  * @param {*} res
  */
 
-const createItems = async (req, res) => {
+const createItem = async (req, res) => {
   const { body } = req;
   console.log(body);
   const data = await jobPositionsModel.create(body);
@@ -45,4 +45,4 @@ const updateItems = (req, res) => {};
  */
 const deleteItems = (req, res) => {};
 
-module.exports = { getItems, getItem, createItems, updateItems, deleteItems };
+module.exports = { getItems, getItem, createItem, updateItems, deleteItems };

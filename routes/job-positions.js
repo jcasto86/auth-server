@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const { validatorCreateItem } = require("../validators/job-positions");
+const customHeader = require("../middleware/customHeader");
 const {
   getItems,
-  createItems,
+  createItem,
   getItem,
 } = require("../controllers/job-positions");
 
@@ -10,7 +12,7 @@ const {
 
 router.get("/", getItems);
 
-router.post("/", createItems);
+router.post("/", validatorCreateItem, customHeader, createItem);
 
 router.get("/:id", getItem);
 
