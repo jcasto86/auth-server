@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require("../middleware/session");
 const {
   validatorCreateItem,
   validatorGetItem,
@@ -18,7 +19,7 @@ const {
 /**
  * Get Items.
  */
-router.get("/", getItems);
+router.get("/", authMiddleware, getItems);
 
 /**
  * Get Item detail.

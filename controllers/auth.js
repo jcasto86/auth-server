@@ -39,17 +39,14 @@ const loginCtrl = async (req, res) => {
       .findOne({ email: req.email })
       .select("password name role email");
 
-    console.log("USER: ", user);
     if (!user) {
       handleHttpError(res, "THIS_IS_NOT_A_USER", 404);
       return;
     }
 
     const hashPassword = user.get("password");
-    console.log("hashPassword", hashPassword);
 
     const check = await compare(req.password, hashPassword);
-    console.log("CHECK: ", check);
 
     if (!check) {
       handleHttpError(res, "INVALID_PASSWORD", 401);
