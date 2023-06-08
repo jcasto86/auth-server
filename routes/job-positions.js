@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../middleware/session");
+const checkRole = require("../middleware/rol");
 const {
   validatorCreateItem,
   validatorGetItem,
@@ -25,21 +26,33 @@ router.get("/", authMiddleware, getItems);
 /**
  * Get Item detail.
  */
-router.get("/:id", validatorGetItem, getItem);
+router.get("/:id", authMiddleware, validatorGetItem, getItem);
 
 /**
  * Create Items.
  */
-router.post("/", validatorCreateItem, createItem);
+router.post(
+  "/",
+  authMiddleware,
+  checkRole(["admin"]),
+  validatorCreateItem,
+  createItem
+);
 
 /**
  * Update Item.
  */
-router.put("/:id", validatorGetItem, validatorCreateItem, updateItems);
+router.put(
+  "/:id",
+  authMiddleware,
+  validatorGetItem,
+  validatorCreateItem,
+  updateItems
+);
 
 /**
  * Delete Item.
  */
-router.delete("/:id", validatorGetItem, deleteItem);
+router.delete("/:id", authMiddleware, validatorGetItem, deleteItem);
 
 module.exports = router;
