@@ -9,8 +9,9 @@ const { handleHttpError } = require("../utils/handleError");
  */
 const getItems = async (req, res) => {
   try {
+    const user = req.user;
     const data = await jobPositionsModel.find({});
-    res.send({ data });
+    res.send({ data, user });
   } catch (error) {
     handleHttpError(res, "GET_ITEMS_ERROR");
   }

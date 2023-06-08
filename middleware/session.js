@@ -24,7 +24,9 @@ const authMiddleware = async (req, res, next) => {
     };
 
     const user = await usersModel.findOne(query);
+    console.log("USER: ", user);
     req.user = user;
+    console.log("REQ.USER: ", user);
 
     next();
   } catch (e) {

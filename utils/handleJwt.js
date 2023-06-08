@@ -1,18 +1,20 @@
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
+const getProperties = require("../utils/handlePropertiesEngine");
+const propertiesKey = getProperties();
 
 /**
  * Must pass User Object
  */
-const tokenSign = async () => {
-  const sign = await jwt.sign(
+const tokenSign = async (user) => {
+  const sign = jwt.sign(
     {
-      _id: URLSearchParams._id,
-      role: URLSearchParams.role,
+      [propertiesKey.id]: user[propertiesKey.id],
+      role: user.role,
     },
     JWT_SECRET,
     {
-      expiresIn: "3h",
+      expiresIn: "2h",
     }
   );
 
@@ -27,7 +29,7 @@ const tokenSign = async () => {
 const verifyToken = async (tokenJwt) => {
   try {
     return jwt.verify(tokenJwt, JWT_SECRET);
-  } catch (error) {
+  } catch (e) {
     return null;
   }
 };

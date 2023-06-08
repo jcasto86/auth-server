@@ -5,7 +5,7 @@ const {
   validatorCreateItem,
   validatorGetItem,
 } = require("../validators/job-positions");
-const customHeader = require("../middleware/customHeader");
+// const customHeader = require("../middleware/customHeader");
 const {
   getItems,
   createItem,
@@ -18,6 +18,7 @@ const {
 
 /**
  * Get Items.
+ * Here, we use authMiddleware to only allow do this to logged in users.
  */
 router.get("/", authMiddleware, getItems);
 
