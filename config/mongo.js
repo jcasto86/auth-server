@@ -7,7 +7,7 @@ const dbConnect = async () => {
       useUnifiedTopology: true,
     });
 
-    console.log("DB Online");
+    console.log("✅ Connected to MongoDB");
   } catch (error) {
     console.log(error);
     throw new Error("Error DB");
